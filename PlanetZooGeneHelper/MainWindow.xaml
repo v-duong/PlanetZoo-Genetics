@@ -25,7 +25,7 @@
                     <DataGridCheckBoxColumn Header="Breedable" Binding="{Binding Path=IsFertile}"/>
                     <DataGridTextColumn Header="ID" Width="50" Binding="{Binding Path=AnimalId}" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Species" Width="120" Binding="{Binding Path=Species}" IsReadOnly="True" />
-                    <DataGridTextColumn Header="Name" Width="120" Binding="{Binding Path=Name}" IsReadOnly="True" />
+                    <DataGridTextColumn Header="Name" Width="120" Binding="{Binding Path=Name}" />
                     <DataGridTextColumn Header="Sex" Width="30" Binding="{Binding Path=SexString}" IsReadOnly="True" />
                     <DataGridTextColumn Header="Size" Width="50" Binding="{Binding Path=SizeValue, StringFormat=P0}" IsReadOnly="True" />
                     <DataGridTextColumn Header="Longevity" Width="50" Binding="{Binding Path=LongevityValue, StringFormat=P0}" IsReadOnly="True" />

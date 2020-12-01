@@ -153,7 +153,7 @@ namespace PlanetZooGeneHelper
             SizeValue = SizeGene.GetGeneValue(GeneValueType.HOMOGENEITY);
             LongevityValue = LongevityGene.GetGeneValue(GeneValueType.HOMOGENEITY);
             FertilityValue = FertilityGene.GetGeneValue(GeneValueType.DIVERSITY);
-            ImmunityValue = FertilityGene.GetGeneValue(GeneValueType.DIVERSITY);
+            ImmunityValue = ImmunityGene.GetGeneValue(GeneValueType.DIVERSITY);
         }
 
         public bool SetGene(byte[] geneArr, GeneType geneId)
