@@ -77,11 +77,11 @@ namespace PlanetZooGeneHelper
             {
                 Gamemode = Gamemode.SCENARIO;
             }
-            else if (gameModeString is "Sandbox")
+            else if (gameModeString == "Sandbox")
             {
                 Gamemode = Gamemode.SANDBOX;
             }
-            else if (gameModeString is "Franchise")
+            else if (gameModeString == "Franchise")
             {
                 Gamemode = Gamemode.FRANCHISE;
             }
@@ -138,6 +138,8 @@ namespace PlanetZooGeneHelper
                         break;
                     }
                 }
+
+                animal.GeneId = BitConverter.ToUInt64(geneIdBytes, 0);
 
                 stream.Seek(datastoreSection_start, SeekOrigin.Begin);
                 long geneIdPosition = Helper.Seek(stream, geneIdBytes, datastoreSection_end);

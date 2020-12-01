@@ -3,6 +3,12 @@ using System.Linq;
 
 namespace PlanetZooGeneHelper
 {
+    public enum GeneValueType
+    {
+        HOMOGENEITY,
+        DIVERSITY
+    }
+
     public class Gene
     {
         public byte[] geneBytes;
@@ -39,7 +45,7 @@ namespace PlanetZooGeneHelper
             geneString = s;
         }
 
-        public int CountAandB()
+        private int CountAandB()
         {
             int valueCount = 0;
             foreach (byte b in geneBytes)
@@ -50,7 +56,7 @@ namespace PlanetZooGeneHelper
             return valueCount;
         }
 
-        public int FindSimilarGenes()
+        private int FindSimilarGenes()
         {
             string[] splitStrings = geneString.Split(' ');
             HashSet<int> similars = new HashSet<int>();
@@ -63,6 +69,19 @@ namespace PlanetZooGeneHelper
             }
 
             return similars.Count;
+        }
+
+        public float GetGeneValue(GeneValueType type)
+        {
+            switch (type)
+            {
+                case GeneValueType.HOMOGENEITY:
+                    return CountAandB() / 12f;
+                case GeneValueType.DIVERSITY:
+                    return 1f - FindSimilarGenes() / 6f;
+            }
+
+            return 0f;
         }
 
         public static char ByteToGeneChar(byte b)

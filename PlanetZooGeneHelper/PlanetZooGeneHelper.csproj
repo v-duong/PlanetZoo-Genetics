@@ -93,8 +93,30 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="OffspringGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="OffspringGridView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ParentGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OffspringData.cs" />
+    <Compile Include="OffspringGrid.xaml.cs">
+      <DependentUpon>OffspringGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="OffspringGridView.xaml.cs">
+      <DependentUpon>OffspringGridView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ParentGrid.xaml.cs">
+      <DependentUpon>ParentGrid.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PlanetZooParkData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

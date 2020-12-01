@@ -18,10 +18,12 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="150" />
             </Grid.ColumnDefinitions>
-            <DataGrid x:Name="Lister" Grid.Row="0" Grid.Column="0"  AutoGenerateColumns="False">
+            <DataGrid x:Name="Lister" Grid.Row="0" Grid.Column="0"  AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID" Width="50" Binding="{Binding Path=AnimalId}" IsReadOnly="True" />
+                    <DataGridCheckBoxColumn Header="Breedable" Binding="{Binding Path=IsFertile}"/>
+                    <DataGridTextColumn Header="ID" Width="50" Binding="{Binding Path=AnimalId}" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Species" Width="120" Binding="{Binding Path=Species}" IsReadOnly="True" />
                     <DataGridTextColumn Header="Name" Width="120" Binding="{Binding Path=Name}" IsReadOnly="True" />
                     <DataGridTextColumn Header="Sex" Width="30" Binding="{Binding Path=SexString}" IsReadOnly="True" />
@@ -35,6 +37,11 @@
                     <DataGridTextColumn Header="Immunity Gene" Width="120" Binding="{Binding Path=ImmunityGeneString}" IsReadOnly="True" />
                 </DataGrid.Columns>
             </DataGrid>
+            <StackPanel Margin="3" Grid.Row="0" Grid.Column="1">
+                <TextBlock Padding="2">Species:</TextBlock>
+                <ComboBox Margin="0,5,0,5" Name="SpeciesSelection"/>
+                <Button  Padding="3" Click="FindOffspring_Click" Content="Calculate Offspring"></Button>
+            </StackPanel>
         </Grid>
     </DockPanel>
 </Window>

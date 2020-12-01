@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="PlanetZooGeneHelper.OffspringGrid"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PlanetZooGeneHelper"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <DataGrid x:Name="dataGrid" IsReadOnly="True" AutoGenerateColumns="False">
+        <DataGrid.Columns>
+            <DataGridTextColumn Header="Total" Width="50" Binding="{Binding Path=TotalValue}"></DataGridTextColumn>
+            <DataGridTextColumn Header="Size" Width="50" Binding="{Binding Path=SizeValue}"></DataGridTextColumn>
+            <DataGridTextColumn Header="Longevity" Width="50" Binding="{Binding Path=LongevityValue}"></DataGridTextColumn>
+            <DataGridTextColumn Header="Fertility" Width="50" Binding="{Binding Path=FertilityValue}"></DataGridTextColumn>
+            <DataGridTextColumn Header="Immunity" Width="50" Binding="{Binding Path=ImmunityValue}"></DataGridTextColumn>
+            <DataGridTextColumn Header="Genetic Possibilities" Width="80" Binding="{Binding Path=genePossibilities}"></DataGridTextColumn>
+            <DataGridTextColumn Header="Probability" Width="80" Binding="{Binding Path=probability, StringFormat=P2}"></DataGridTextColumn>
+        </DataGrid.Columns>
+    </DataGrid>
+</UserControl>

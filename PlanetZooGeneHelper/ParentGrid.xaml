@@ -1,0 +1,26 @@
+﻿<UserControl x:Class="PlanetZooGeneHelper.ParentGrid"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PlanetZooGeneHelper"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <DataGrid x:Name="dataGrid" IsReadOnly="True" AutoGenerateColumns="False">
+        <DataGrid.Columns>
+            <DataGridTextColumn Header="Mother" Binding="{Binding Path=MotherName}"></DataGridTextColumn>
+            <DataGridTextColumn Header="Father" Binding="{Binding Path=FatherName}"></DataGridTextColumn>
+            <DataGridTextColumn Header="Best's Total" Width="60" Binding="{Binding Path=BestOffspring.TotalValue}"></DataGridTextColumn>
+            <DataGridTextColumn Header="Best's Size" Width="60" Binding="{Binding Path=BestOffspring.SizeValue}"></DataGridTextColumn>
+            <DataGridTextColumn Header="Best's Longevity" Width="60" Binding="{Binding Path=BestOffspring.LongevityValue}"></DataGridTextColumn>
+            <DataGridTextColumn Header="Best's Fertility" Width="60" Binding="{Binding Path=BestOffspring.FertilityValue}"></DataGridTextColumn>
+            <DataGridTextColumn Header="Best's Immunity" Width="60" Binding="{Binding Path=BestOffspring.ImmunityValue}"></DataGridTextColumn>
+            <DataGridTextColumn Header="Probability for Best" Width="110" Binding="{Binding Path=BestOffspring.probability, StringFormat=P2}"></DataGridTextColumn>
+            <DataGridTextColumn Header="Avg Total" Width="60" Binding="{Binding Path=AverageTotal,StringFormat=F1}"></DataGridTextColumn>
+            <DataGridTextColumn Header="Avg Size" Width="60" Binding="{Binding Path=AverageSize,StringFormat=F1}"></DataGridTextColumn>
+            <DataGridTextColumn Header="Avg Longevity" Width="60" Binding="{Binding Path=AverageLongevity,StringFormat=F1}"></DataGridTextColumn>
+            <DataGridTextColumn Header="Avg Fertility" Width="60" Binding="{Binding Path=AverageFertility,StringFormat=F1}"></DataGridTextColumn>
+            <DataGridTextColumn Header="Avg Immunity" Width="60" Binding="{Binding Path=AverageImmunity,StringFormat=F1}"></DataGridTextColumn>
+        </DataGrid.Columns>
+    </DataGrid>
+</UserControl>

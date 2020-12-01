@@ -22,8 +22,10 @@ namespace PlanetZooGeneHelper
         public string Species { get; set; }
         public ushort NameId { get; set; }
         public string Name { get; set; }
+        public ulong GeneId { get; set; }
 
         public byte Sex { get; set; }
+        public bool IsFertile { get; set; }
 
         public string SizeGeneString { get { return SizeGene.geneString; } }
         public string LongevityGeneString { get { return LongevityGene.geneString; } }
@@ -52,6 +54,7 @@ namespace PlanetZooGeneHelper
             SpeciesId = 0;
             NameId = 0;
             Name = "";
+            IsFertile = true;
             SizeGene = new Gene();
             LongevityGene = new Gene();
             UnknownGene_1 = new Gene();
@@ -66,6 +69,79 @@ namespace PlanetZooGeneHelper
             SpeciesId = speciesId;
         }
 
+        public static Dictionary<int, List<Gene>> CalculateGenePairings(AnimalData female, AnimalData male, GeneType geneType)
+        {
+            byte[] femaleGene;
+            byte[] maleGene;
+            switch (geneType)
+            {
+                case GeneType.SIZE:
+                    femaleGene = female.SizeGene.geneBytes;
+                    maleGene = male.SizeGene.geneBytes;
+                    break;
+                case GeneType.LONGEVITY:
+                    femaleGene = female.LongevityGene.geneBytes;
+                    maleGene = male.LongevityGene.geneBytes;
+                    break;
+                case GeneType.UNKNOWN_1:
+                    return null;
+                case GeneType.FERTILITY:
+                    femaleGene = female.FertilityGene.geneBytes;
+                    maleGene = male.FertilityGene.geneBytes;
+                    break;
+                case GeneType.IMMUNITY:
+                    femaleGene = female.ImmunityGene.geneBytes;
+                    maleGene = male.ImmunityGene.geneBytes;
+                    break;
+                case GeneType.UNKNOWN_2:
+                    return null;
+                default:
+                    return null;
+            }
+            Dictionary<int, List<Gene>> pairings = new Dictionary<int, List<Gene>>();
+            Gene[] genes = new Gene[4];
+            genes[0] = new Gene(femaleGene.Take(6).Concat(maleGene.Take(6)).ToArray());
+            genes[1] = new Gene(femaleGene.Skip(6).Take(6).Concat(maleGene.Take(6)).ToArray());
+            genes[2] = new Gene(femaleGene.Take(6).Concat(maleGene.Skip(6).Take(6)).ToArray());
+            genes[3] = new Gene(femaleGene.Skip(6).Take(6).Concat(maleGene.Skip(6).Take(6)).ToArray());
+            switch (geneType)
+            {
+                case GeneType.SIZE:
+                case GeneType.LONGEVITY:
+                    foreach(Gene gene in genes)
+                    {
+                        int value = (int)(gene.GetGeneValue(GeneValueType.HOMOGENEITY)*100f);
+                        if (!pairings.ContainsKey(value))
+                        {
+                            pairings.Add(value, new List<Gene>() { gene });
+                        } else
+                        {
+                            pairings[value].Add(gene);
+                        }
+                    }
+                    break;
+                case GeneType.FERTILITY:
+                case GeneType.IMMUNITY:
+                    foreach (Gene gene in genes)
+                    {
+                        int value = (int)(gene.GetGeneValue(GeneValueType.DIVERSITY)*100f);
+                        if (!pairings.ContainsKey(value))
+                        {
+                            pairings.Add(value, new List<Gene>() { gene });
+                        }
+                        else
+                        {
+                            pairings[value].Add(gene);
+                        }
+                    }
+                    break;
+                default:
+                    return null;
+            }
+
+            return pairings;
+        }
+
         public void SetGene(IEnumerable<byte> geneArr)
         {
             SetGene(geneArr.Take(GENE_LENGTH).ToArray(), GeneType.SIZE);
@@ -74,10 +150,10 @@ namespace PlanetZooGeneHelper
             SetGene(geneArr.Skip(GENE_LENGTH * 3).Take(GENE_LENGTH).ToArray(), GeneType.FERTILITY);
             SetGene(geneArr.Skip(GENE_LENGTH * 4).Take(GENE_LENGTH).ToArray(), GeneType.IMMUNITY);
 
-            SizeValue = SizeGene.CountAandB() / 12f;
-            LongevityValue = LongevityGene.CountAandB() / 12f;
-            FertilityValue = 1f - FertilityGene.FindSimilarGenes() / 6f;
-            ImmunityValue = 1f - ImmunityGene.FindSimilarGenes() / 6f;
+            SizeValue = SizeGene.GetGeneValue(GeneValueType.HOMOGENEITY);
+            LongevityValue = LongevityGene.GetGeneValue(GeneValueType.HOMOGENEITY);
+            FertilityValue = FertilityGene.GetGeneValue(GeneValueType.DIVERSITY);
+            ImmunityValue = FertilityGene.GetGeneValue(GeneValueType.DIVERSITY);
         }
 
         public bool SetGene(byte[] geneArr, GeneType geneId)
