@@ -10,7 +10,7 @@
         <DataGrid.Columns>
             <DataGridTextColumn Header="Mother" Binding="{Binding Path=MotherName}"></DataGridTextColumn>
             <DataGridTextColumn Header="Father" Binding="{Binding Path=FatherName}"></DataGridTextColumn>
-            <DataGridTextColumn Header="Best's Overall" Width="60" Binding="{Binding Path=BestOffspring.OverallValue}"></DataGridTextColumn>
+            <DataGridTextColumn Header="Best's Overall" Width="60" Binding="{Binding Path=BestOffspring.TotalValue}"></DataGridTextColumn>
             <DataGridTextColumn Header="Best's Size" Width="60" Binding="{Binding Path=BestOffspring.SizeValue}"></DataGridTextColumn>
             <DataGridTextColumn Header="Best's Longevity" Width="60" Binding="{Binding Path=BestOffspring.LongevityValue}"></DataGridTextColumn>
             <DataGridTextColumn Header="Best's Fertility" Width="60" Binding="{Binding Path=BestOffspring.FertilityValue}"></DataGridTextColumn>
