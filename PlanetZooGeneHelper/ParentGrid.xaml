@@ -10,13 +10,13 @@
         <DataGrid.Columns>
             <DataGridTextColumn Header="Mother" Binding="{Binding Path=MotherName}"></DataGridTextColumn>
             <DataGridTextColumn Header="Father" Binding="{Binding Path=FatherName}"></DataGridTextColumn>
-            <DataGridTextColumn Header="Best's Total" Width="60" Binding="{Binding Path=BestOffspring.TotalValue}"></DataGridTextColumn>
+            <DataGridTextColumn Header="Best's Overall" Width="60" Binding="{Binding Path=BestOffspring.OverallValue}"></DataGridTextColumn>
             <DataGridTextColumn Header="Best's Size" Width="60" Binding="{Binding Path=BestOffspring.SizeValue}"></DataGridTextColumn>
             <DataGridTextColumn Header="Best's Longevity" Width="60" Binding="{Binding Path=BestOffspring.LongevityValue}"></DataGridTextColumn>
             <DataGridTextColumn Header="Best's Fertility" Width="60" Binding="{Binding Path=BestOffspring.FertilityValue}"></DataGridTextColumn>
             <DataGridTextColumn Header="Best's Immunity" Width="60" Binding="{Binding Path=BestOffspring.ImmunityValue}"></DataGridTextColumn>
             <DataGridTextColumn Header="Probability for Best" Width="110" Binding="{Binding Path=BestOffspring.probability, StringFormat=P2}"></DataGridTextColumn>
-            <DataGridTextColumn Header="Avg Total" Width="60" Binding="{Binding Path=AverageTotal,StringFormat=F1}"></DataGridTextColumn>
+            <DataGridTextColumn Header="Avg Overall" Width="60" Binding="{Binding Path=AverageTotal,StringFormat=F1}"></DataGridTextColumn>
             <DataGridTextColumn Header="Avg Size" Width="60" Binding="{Binding Path=AverageSize,StringFormat=F1}"></DataGridTextColumn>
             <DataGridTextColumn Header="Avg Longevity" Width="60" Binding="{Binding Path=AverageLongevity,StringFormat=F1}"></DataGridTextColumn>
             <DataGridTextColumn Header="Avg Fertility" Width="60" Binding="{Binding Path=AverageFertility,StringFormat=F1}"></DataGridTextColumn>

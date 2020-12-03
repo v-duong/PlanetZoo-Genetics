@@ -122,7 +122,7 @@ namespace PlanetZooGeneHelper
                     animal.SpeciesId = buffer[5];
                 }
 
-                if (stringsList.Count >= animal.SpeciesId) 
+                if (stringsList.Count >= animal.SpeciesId)
                     animal.Species = stringsList[animal.SpeciesId];
 
                 int genePos = 0;
@@ -161,7 +161,7 @@ namespace PlanetZooGeneHelper
                     else
                     {
                         long geneIdPosition2 = Helper.Seek(stream, geneIdBytes, datastoreSection_end);
-                        while (geneIdPosition2 != -1) 
+                        while (geneIdPosition2 != -1)
                         {
                             stream.Seek(geneIdPosition2 + 8, SeekOrigin.Begin);
                             stream.Read(buffer2, 0, 60);
@@ -169,7 +169,8 @@ namespace PlanetZooGeneHelper
                             if (ro.IndexOf(geneSequence.ToArray()) == -1 && ro.IndexOf(geneSequence.Skip(8).ToArray()) != -1)
                             {
                                 geneIdPosition2 = Helper.Seek(stream, geneIdBytes, datastoreSection_end);
-                            } else
+                            }
+                            else
                             {
                                 geneIdPosition = geneIdPosition2;
                                 break;
@@ -227,15 +228,17 @@ namespace PlanetZooGeneHelper
 
             return null;
         }
+
         /* First 12 bytes seem to be some unknown gene
          * The next byte is the animal's sex
-         * 
+         *
          * Name is (most of the time) stored as a reference to a string in string list.
          * Only interested in the 12 bits, marked as '?' below.
          * Format: 0xC?, ??, 0x0, 0x0, 0x0, 0x0 (preceded by some series of 0x00 and 0xF3)
          * There may be multiple references but we just take the last one for now.
         */
-        private string ReadAnimalDataStore(AnimalData animal,Stream stream, long geneIdPosition, int initialSkip)
+
+        private string ReadAnimalDataStore(AnimalData animal, Stream stream, long geneIdPosition, int initialSkip)
         {
             string name = "";
             byte[] buffer = new byte[128];
@@ -264,7 +267,7 @@ namespace PlanetZooGeneHelper
                 bool foundSomeReference = false;
                 for (i = searchPos; i < ro.Length; i++)
                 {
-                    if ((ro[i] & 0xF0) == 0xC0)
+                    if ((ro[i] & 0xF0) == 0xC0 && zeroCount > 0)
                     {
                         foundSomeReference = true;
                         tempNamePos = i;
@@ -313,7 +316,20 @@ namespace PlanetZooGeneHelper
                 else
                 {
                     int nameIndex = ((ro[tempNamePos] & 0x0F) << 8) + ro[tempNamePos + 1];
-                    name = StringsList[nameIndex];
+                    if (nameIndex < StringsList.Count)
+                        name = StringsList[nameIndex];
+                    else
+                    {
+                        name = "";
+#if DEBUG
+                        string debugString = "";
+                        foreach (byte b in buffer)
+                        {
+                            debugString += b.ToString("X2");
+                        }
+                        Debug.WriteLine(debugString);
+#endif
+                    }
                 }
             }
 
