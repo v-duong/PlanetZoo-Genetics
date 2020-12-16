@@ -17,35 +17,57 @@ namespace PlanetZooGeneHelper
         public float AverageFertility { get; set; }
         public float AverageImmunity { get; set; }
 
-        public PairingData(string mother, string father)
+        public PairingData(AnimalData female, AnimalData male)
         {
             offspringList = new Dictionary<string, OffspringData>();
-            MotherName = mother;
-            FatherName = father;
+            MotherName = female.Name;
+            FatherName = male.Name;
             BestSizeLongevity = 0;
             BestFertilityImmunity = 0;
+
+            InitializePairings(female, male);
+        }
+
+        public void InitializePairings(AnimalData female, AnimalData male)
+        {
+            Dictionary<int, List<Gene>> sizeOccurences = AnimalData.CalculateGenePairings(female, male, GeneType.SIZE);
+            Dictionary<int, List<Gene>> longevityOccurences = AnimalData.CalculateGenePairings(female, male, GeneType.LONGEVITY);
+            Dictionary<int, List<Gene>> fertilityOccurences = AnimalData.CalculateGenePairings(female, male, GeneType.FERTILITY);
+            Dictionary<int, List<Gene>> immunityOccurences = AnimalData.CalculateGenePairings(female, male, GeneType.IMMUNITY);
+
+            foreach (var sPair in sizeOccurences)
+                foreach (var lPair in longevityOccurences)
+                    foreach (var fPair in fertilityOccurences)
+                        foreach (var iPair in immunityOccurences)
+                        {
+                            AddOffspringData(sPair.Key, lPair.Key, fPair.Key, iPair.Key, sPair.Value.Count
+                                                                                                     * lPair.Value.Count
+                                                                                                     * fPair.Value.Count
+                                                                                                     * iPair.Value.Count);
+                        }
+
+            CalculateProbabilities();
         }
 
         public void CalculateProbabilities()
         {
-            int total = 0, s = 0, l = 0, f = 0, i = 0;
+            AverageTotal = 0;
+            AverageSize = 0;
+            AverageLongevity = 0;
+            AverageFertility = 0;
+            AverageImmunity = 0;
             publicView = new List<OffspringData>();
             foreach (var keyValue in offspringList)
             {
                 OffspringData offspringOutcome = keyValue.Value;
                 offspringOutcome.probability = offspringOutcome.genePossibilities / 256f;
                 publicView.Add(offspringOutcome);
-                total += offspringOutcome.TotalValue * offspringOutcome.genePossibilities;
-                s += offspringOutcome.SizeValue * offspringOutcome.genePossibilities;
-                l += offspringOutcome.LongevityValue * offspringOutcome.genePossibilities;
-                f += offspringOutcome.FertilityValue * offspringOutcome.genePossibilities;
-                i += offspringOutcome.ImmunityValue * offspringOutcome.genePossibilities;
+                AverageTotal += offspringOutcome.TotalValue * offspringOutcome.probability;
+                AverageSize += offspringOutcome.SizeValue * offspringOutcome.probability;
+                AverageLongevity += offspringOutcome.LongevityValue * offspringOutcome.probability;
+                AverageFertility += offspringOutcome.FertilityValue * offspringOutcome.probability;
+                AverageImmunity += offspringOutcome.ImmunityValue * offspringOutcome.probability;
             }
-            AverageTotal = total / 256f;
-            AverageSize = s / 256f;
-            AverageLongevity = l / 256f;
-            AverageFertility = f / 256f;
-            AverageImmunity = i / 256f;
         }
 
         public void AddOffspringData(int s, int l, int f, int i, Gene gene, int occurences)

@@ -108,26 +108,8 @@ namespace PlanetZooGeneHelper
             {
                 foreach (AnimalData male in maleList)
                 {
-                    PairingData pairingData = new PairingData(female.Name, male.Name);
+                    PairingData pairingData = new PairingData(female, male);
                     pairingsList.Add(pairingData);
-
-                    Dictionary<int, List<Gene>> sizeOccurences = AnimalData.CalculateGenePairings(female, male, GeneType.SIZE);
-                    Dictionary<int, List<Gene>> longevityOccurences = AnimalData.CalculateGenePairings(female, male, GeneType.LONGEVITY);
-                    Dictionary<int, List<Gene>> fertilityOccurences = AnimalData.CalculateGenePairings(female, male, GeneType.FERTILITY);
-                    Dictionary<int, List<Gene>> immunityOccurences = AnimalData.CalculateGenePairings(female, male, GeneType.IMMUNITY);
-
-                    foreach (var sPair in sizeOccurences)
-                        foreach (var lPair in longevityOccurences)
-                            foreach (var fPair in fertilityOccurences)
-                                foreach (var iPair in immunityOccurences)
-                                {
-                                    pairingData.AddOffspringData(sPair.Key, lPair.Key, fPair.Key, iPair.Key, sPair.Value.Count
-                                                                                                             * lPair.Value.Count
-                                                                                                             * fPair.Value.Count
-                                                                                                             * iPair.Value.Count);
-                                }
-
-                    pairingData.CalculateProbabilities();
                 }
             }
 

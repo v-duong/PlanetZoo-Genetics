@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:PlanetZooGeneHelper"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <DataGrid x:Name="dataGrid" IsReadOnly="True" AutoGenerateColumns="False">
+    <DataGrid x:Name="dataGrid" IsReadOnly="True" AutoGenerateColumns="False" HorizontalAlignment="Left" HorizontalContentAlignment="Left">
         <DataGrid.Columns>
             <DataGridTextColumn Header="Mother" Binding="{Binding Path=MotherName}"></DataGridTextColumn>
             <DataGridTextColumn Header="Father" Binding="{Binding Path=FatherName}"></DataGridTextColumn>

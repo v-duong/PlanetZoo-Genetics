@@ -18,7 +18,7 @@ namespace PlanetZooGeneHelper
         public const int GENE_LENGTH = 12;
 
         public uint AnimalId { get; set; }
-        public ushort SpeciesId { get; set; }
+        public uint SpeciesId { get; set; }
         public string Species { get; set; }
         public ushort NameId { get; set; }
         public string Name { get; set; }

@@ -5,6 +5,15 @@ namespace PlanetZooGeneHelper
 {
     internal class Helper
     {
+        public static bool CheckFirstFourBits(byte b, byte compare)
+        {
+            return (b & 0xF0) == compare;
+        }
+        public static uint ConvertLastThreeBytes(byte a, byte b)
+        {
+            return (uint)(((a & 0x0F) << 8) + b);
+        }
+
         public static long Seek(Stream stream, byte[] search, long endIndex = -1)
         {
             int bufferSize = 1024;

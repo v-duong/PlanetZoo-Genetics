@@ -110,8 +110,20 @@ namespace PlanetZooGeneHelper
 
                 if (Gamemode == Gamemode.FRANCHISE)
                 {
-                    animal.AnimalId = buffer[0];
-                    animal.SpeciesId = buffer[1];
+                    if (Helper.CheckFirstFourBits(buffer[0], 0xC0))
+                    {
+                        animal.AnimalId = Helper.ConvertLastThreeBytes(buffer[0], buffer[1]);
+
+                        if (Helper.CheckFirstFourBits(buffer[2], 0xC0))
+                            animal.SpeciesId = Helper.ConvertLastThreeBytes(buffer[2], buffer[3]);
+                        else
+                            animal.SpeciesId = buffer[2];
+                    }
+                    else
+                    {
+                        animal.AnimalId = buffer[0];
+                        animal.SpeciesId = buffer[1];
+                    }
                 }
                 else
                 {
@@ -123,7 +135,7 @@ namespace PlanetZooGeneHelper
                 }
 
                 if (stringsList.Count >= animal.SpeciesId)
-                    animal.Species = stringsList[animal.SpeciesId];
+                    animal.Species = stringsList[(int)animal.SpeciesId];
 
                 int genePos = 0;
                 IEnumerable<byte> geneSequence = FallbackGeneSearch(buffer, stream, ref genePos);
@@ -132,7 +144,7 @@ namespace PlanetZooGeneHelper
                 byte[] geneIdBytes = new byte[8];
                 for (int i = genePos; i < buffer.Length; i++)
                 {
-                    if ((buffer[i] & 0xF0) == 0x80)
+                    if (Helper.CheckFirstFourBits(buffer[i], 0x80))
                     {
                         geneIdBytes = buffer.Skip(i).Take(8).ToArray();
                         break;
@@ -267,7 +279,7 @@ namespace PlanetZooGeneHelper
                 bool foundSomeReference = false;
                 for (i = searchPos; i < ro.Length; i++)
                 {
-                    if ((ro[i] & 0xF0) == 0xC0 && zeroCount > 0)
+                    if ((Helper.CheckFirstFourBits(ro[i], 0xC0)) && zeroCount > 0)
                     {
                         foundSomeReference = true;
                         tempNamePos = i;
